@@ -12,8 +12,8 @@ Tap-to-kill game V.1
 Gameplay: Players will need to tap various items(random simple shapes) that pop up on the screen to score points.
 Objects will pop up in random locations and it’s up to the player to tap as many objects as quickly as possible for the
 highest score per 1 minute timer. Negative objects(random simple shapes marked with red color) - if hit these will
-deduct points from the player’s score
-Game Setup:
+deduct points from the player’s score.
+Gam Setup:
 1) basic game setup
 2) random popup instantiate logic
 3) negative and positive popup properties
