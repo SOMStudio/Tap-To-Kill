@@ -13,16 +13,16 @@ Gameplay: Players will need to tap various items(random simple shapes) that pop 
 Objects will pop up in random locations and it’s up to the player to tap as many objects as quickly as possible for the
 highest score per 1 minute timer. Negative objects(random simple shapes marked with red color) - if hit these will
 deduct points from the player’s score
-Game Setup: 
- basic game setup
- random popup instantiate logic 
- negative and positive popup properties 
- popup tap logic (negative and positive popup) 
- points management 
- time logic (for 1 min timer) 
- restart 
- start and game over functionality 
- game pause functionality
+Game Setup:
+1) basic game setup
+2) random popup instantiate logic
+3) negative and positive popup properties
+4) popup tap logic (negative and positive popup)
+5) points management
+6) time logic (for 1 min timer)
+7) restart
+8) start and game over functionality
+9) game pause functionality
 
 
 ## Implemented:
