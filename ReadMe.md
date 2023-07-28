@@ -1,18 +1,12 @@
 # Tap-to-kill (Arcade-catcher 2D)
 
 ## Task:
-Представьте, что вы делаете прототип в проекте, который вы будете разрабатывать и поддерживать
-и дальше ( продемонстрируйте, что продумали архитектуру приложения). Необходимо:
-Выбрать одну из описанных ниже игр. Реализовать подключение к фейковому серверу, после коллбэка на успешное подключение
-загрузить main menu с кнопкой start. Нажатие на кнопку запускает игру.(реализовать игру, используя примитивные формы или
-бесплатные ассеты)
-Залить проект на bitbucket/github. Продемонстрировать результат тестового в виде проекта на репозитории и .APK файла.
-
-Tap-to-kill game V.1
-Gameplay: Players will need to tap various items(random simple shapes) that pop up on the screen to score points.
+Tap-to-kill
+Gameplay: Players will need to tap various items (random simple shapes) that pop up on the screen to score points.
 Objects will pop up in random locations and it’s up to the player to tap as many objects as quickly as possible for the
-highest score per 1 minute timer. Negative objects(random simple shapes marked with red color) - if hit these will
+highest score per 1 minute timer. Negative objects (random simple shapes marked with red color) - if hit these will
 deduct points from the player’s score.
+
 Gam Setup:
 1) basic game setup
 2) random popup instantiate logic
@@ -36,6 +30,6 @@ Additional:
 4) Added sounds, music in the game (and the ability to adjust the volume in the Settings window).
 5) Confirmation dialog window when you exit the game.
 
-## Unity 5.6.2
+## Unity 2019
 
 ![Tap-to-kill](screenshot.png)
