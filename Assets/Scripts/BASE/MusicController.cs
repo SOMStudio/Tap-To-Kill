@@ -30,7 +30,7 @@ public class MusicController : MonoBehaviour {
 		if (PlayerPrefs.HasKey (stKey)) {
 			volumeON = PlayerPrefs.GetFloat (stKey);
 		} else {
-			volumeON = 1;
+			volumeON = 0.2f;
 		}
 	
 		// create a game object and add an AudioSource to it, to play music on

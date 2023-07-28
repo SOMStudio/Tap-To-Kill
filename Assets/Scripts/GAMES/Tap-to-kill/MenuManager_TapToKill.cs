@@ -37,7 +37,7 @@ public class MenuManager_TapToKill : BaseMenuController {
 	}
 
 	#region PredefineEvents
-	protected override void ChancheWindowEvent (int number)
+	protected override void ChangeWindowEvent (int number)
 	{
 		gameController.OpenMenu_Sound ();
 	}
@@ -47,7 +47,7 @@ public class MenuManager_TapToKill : BaseMenuController {
 		gameController.CloseMenu_Sound ();
 	}
 
-	protected override void ChancheConsoleWEvent (int number)
+	protected override void ChangeConsoleWEvent (int number)
 	{
 		gameController.OpenMenu_Sound ();
 	}

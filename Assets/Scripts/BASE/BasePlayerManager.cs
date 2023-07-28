@@ -2,41 +2,37 @@ using UnityEngine;
 
 public class BasePlayerManager : MonoBehaviour
 {
-	[SerializeField]
-	protected bool didInit = false;
-
-	// data player
-	[SerializeField]
-	protected BaseUserManager DataManager;
-
-	// main event
-	void Awake ()
+	[SerializeField] protected bool didInit;
+	
+	[SerializeField] protected BaseUserManager DataManager;
+	
+	private void Awake()
 	{
 		Init();
 	}
-
-	// main logic
-	public virtual void Init ()
+	
+	public virtual void Init()
 	{
 		// cache ref to our user manager
-		if (!DataManager) {
-			DataManager = gameObject.GetComponent<BaseUserManager> ();
-		
+		if (!DataManager)
+		{
+			DataManager = gameObject.GetComponent<BaseUserManager>();
+
 			if (!DataManager)
-				DataManager = gameObject.AddComponent<BaseUserManager> ();
+				DataManager = gameObject.AddComponent<BaseUserManager>();
 		}
 
 		// set default data
-		DataManager.GetDefaultData ();
+		DataManager.GetDefaultData();
 
-		didInit= true;
+		didInit = true;
 	}
-		
+
 	public virtual void GameFinished()
 	{
 		DataManager.SetIsFinished(true);
 	}
-	
+
 	public virtual void GameStart()
 	{
 		DataManager.SetIsFinished(false);

@@ -1,64 +1,72 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class BaseMusicController : MonoBehaviour {
+public class BaseMusicController : MonoBehaviour
+{
+	[SerializeField] private List<MusicController> musicList;
 
-	[SerializeField]
-	private List<MusicController> musicList;
-
-	[System.NonSerialized]
-	public static BaseMusicController Instance;
-
-	// main event
-	void Awake()
+	[System.NonSerialized] public static BaseMusicController Instance;
+	
+	private void Awake()
 	{
-		Init ();
+		Init();
 	}
 
-	void Start() {
+	private void Start()
+	{
 		// keep this object alive
-		DontDestroyOnLoad (this.gameObject);
+		DontDestroyOnLoad(this.gameObject);
 	}
-
-	// main logic
-	void Init() {
-		// activate instance
-		if (Instance == null) {
+	
+	void Init()
+	{
+		if (Instance == null)
+		{
 			Instance = this;
-		} else if (Instance != this) {
-			Destroy (gameObject);
+		}
+		else if (Instance != this)
+		{
+			Destroy(gameObject);
 		}
 	}
 
-	public void UpdateValume() {
-		foreach (MusicController item in musicList) {
-			item.UpdateVolume ();
+	public void UpdateVolume()
+	{
+		foreach (MusicController item in musicList)
+		{
+			item.UpdateVolume();
 		}
 	}
 
-	public void StopMusic(int num) {
-		MusicController temp = musicList [num];
+	public void StopMusic(int num)
+	{
+		MusicController temp = musicList[num];
 
-		if (temp) {
+		if (temp)
+		{
 			temp.loopMusic = false;
-			temp.FadeOut (15f);
+			temp.FadeOut(15f);
 		}
 	}
 
-	public void StopMusicButPlayToEnd(int num) {
-		MusicController temp = musicList [num];
+	public void StopMusicButPlayToEnd(int num)
+	{
+		MusicController temp = musicList[num];
 
-		if (temp) {
+		if (temp)
+		{
 			temp.loopMusic = false;
 		}
 	}
 
-	public void PlayMusic(int num) {
-		MusicController temp = musicList [num];
+	public void PlayMusic(int num)
+	{
+		MusicController temp = musicList[num];
 
-		if (temp) {
+		if (temp)
+		{
 			temp.loopMusic = true;
-			temp.FadeIn (15f);
+			temp.FadeIn(15f);
 		}
 	}
 }

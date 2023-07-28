@@ -292,7 +292,7 @@ public class GameController_TapToKill : BaseGameController {
 	}
 
 	private void UpdateMusicVolume() {
-		musicManager.UpdateValume ();
+		musicManager.UpdateVolume ();
 	}
 
 	public void UpdateVolume() {

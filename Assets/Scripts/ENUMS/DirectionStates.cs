@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Directions
+﻿namespace Directions
 {
 	public enum Direction
 	{
