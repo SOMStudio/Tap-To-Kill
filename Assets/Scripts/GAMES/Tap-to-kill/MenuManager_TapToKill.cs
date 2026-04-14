@@ -10,9 +10,7 @@ public class MenuManager_TapToKill : BaseMenuController {
 
 	private GameController_TapToKill gameController;
 
-	// main event
-	void Awake () {
-		// activate instance
+	private void Awake () {
 		if (Instance == null) {
 			Instance = this;
 		} else if (Instance != this) {
@@ -61,24 +59,21 @@ public class MenuManager_TapToKill : BaseMenuController {
 	#region MainLogic
 	protected override void ExitGame ()
 	{
-		// menuManager save
 		SaveOptionsPrefs ();
-		// gameController save
 		gameController.ExitGame ();
-
-		// exit game
+		
 		base.ExitGame ();
 	}
 
 	private void ClickEscapeEvent() {
 		if (windowStartActive) {
-			if (windowActive == 0) { //Settings
+			if (windowActive == 0) {
 				DisActivateWindow ();
-			} else if (windowActive == 2) { //ExitGame
+			} else if (windowActive == 2) {
 				DisActivateConsoleWindow ();
 			}
 		} else {
-			if (windowActive == -1) { //Play Game
+			if (windowActive == -1) {
 				gameController.PauseGame ();
 			}
 		}
@@ -119,17 +114,14 @@ public class MenuManager_TapToKill : BaseMenuController {
 
 	#region buttonHandlers
 	public void RestartGame_Button() {
-		// start game
 		gameController.RestartGameButtonPressed ();
-
-		// sound button
+		
 		gameController.OpenMenu_Sound ();
 	}
 
 	public void Conection_Button() {
 		gameController.ConnectToServer ();
-
-		// sound button
+		
 		gameController.OpenMenu_Sound ();
 	}
 
@@ -142,8 +134,7 @@ public class MenuManager_TapToKill : BaseMenuController {
 
 		HideWindowInform ();
 		ShowWindowStartGame ();
-
-		// sound button
+		
 		gameController.OpenMenu_Sound ();
 	}
 

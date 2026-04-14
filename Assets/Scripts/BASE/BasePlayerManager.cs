@@ -10,10 +10,9 @@ public class BasePlayerManager : MonoBehaviour
 	{
 		Init();
 	}
-	
-	public virtual void Init()
+
+	protected virtual void Init()
 	{
-		// cache ref to our user manager
 		if (!DataManager)
 		{
 			DataManager = gameObject.GetComponent<BaseUserManager>();
@@ -21,8 +20,7 @@ public class BasePlayerManager : MonoBehaviour
 			if (!DataManager)
 				DataManager = gameObject.AddComponent<BaseUserManager>();
 		}
-
-		// set default data
+		
 		DataManager.GetDefaultData();
 
 		didInit = true;

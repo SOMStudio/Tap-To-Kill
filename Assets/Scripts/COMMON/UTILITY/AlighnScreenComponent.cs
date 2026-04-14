@@ -21,8 +21,7 @@ public class AlighnScreenComponent : MonoBehaviour
 		{
 			myTransform = transform;
 		}
-
-		// update position
+		
 		UpdatePosition();
 	}
 	

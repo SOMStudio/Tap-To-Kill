@@ -3,37 +3,35 @@
 public class GameController_TapToKill : BaseGameController {
 
 	[Header("Spawn settings")]
-	public GameObject[] spawnList;					// prefabs foe spawn
-	public Transform[] spawnClip; 					// clip in spawn possition
-	public Transform spawnParent; 					// parent for spawned gameObject
+	public GameObject[] spawnList;
+	public Transform[] spawnClip;
+	public Transform spawnParent;
 
 	[SerializeField]
-	private float timeBetweaneSpawn = 2.0f; 		// time betweane spawn
+	private float timeBetweenSpawn = 2.0f;
 	[SerializeField]
-	private float timeFrequenceSpawn = 10; 			// time after decreace spawn time
+	private float timeFrequencySpawn = 10;
 	[SerializeField]
-	private float timeDecreaceStep = 0.2f; 			// step decreace spawn
+	private float timeDecreaseStep = 0.2f;
 	[SerializeField]
-	private float timeLimitBetweaneSpawn = 0.5f; 	// limit betweane spawn
+	private float timeLimitBetweenSpawn = 0.5f;
 
 	[Header("State Game")]
 	[SerializeField]
-	private bool connectionGame = false;
+	private bool connectionGame;
 	[SerializeField]
-	private bool startGame = false;
-
-	// spawn settings
-	private float timePlay = 0.0f;
+	private bool startGame;
+	
+	private float timePlay;
 	private float betweaneSpawnTime = 2.0f;
-	private float lastSpawnTime = 0.0f;
-	private float lastFrequenceSpawnTime = 0.0f;
+	private float lastSpawnTime;
+	private float lastFrequenceSpawnTime;
 
 	private TimerClass theTimer;
 
 	[System.NonSerialized]
 	public static GameController_TapToKill Instance;
-
-	// its init from instance but better set in panel
+	
 	[Header("Managers")]
 	[SerializeField]
 	private MenuManager_TapToKill menuManager;
@@ -44,9 +42,7 @@ public class GameController_TapToKill : BaseGameController {
 	[SerializeField]
 	private BaseMusicController musicManager;
 
-	// main event
-	void Awake () {
-		// activate instance
+	private void Awake () {
 		if (Instance == null) {
 			Instance = this;
 		} else if (Instance != this) {
@@ -54,46 +50,36 @@ public class GameController_TapToKill : BaseGameController {
 		}
 	}
 
-	void Start () {
-		// init game
+	private void Start () {
 		InitGame ();
-
-		// crear Menu
+		
 		Update_UI ();
-
-		// start game
+		
 		StartGame ();
 	}
 
-	void Update () {
+	private void Update () {
 		if (startGame && !Paused) {
-			// global time for frequence spawn
 			theTimer.UpdateTimer ();
 			int curTime = theTimer.GetTime ();
-
-			// time for Spawn
+			
 			timePlay += Time.deltaTime;
-
-			// spawn Manager
+			
 			SpawnManager (timePlay);
-
-			// delay increase spawn frequence
+			
 			SpawnFrequentManager (curTime);
-
-			// update time Timer
+			
 			UpdateTimer_UI ();
 		}
 	}
 
-	void OnApplicationPause(bool pauseStatus)
+	private void OnApplicationPause(bool pauseStatus)
 	{
 		if (pauseStatus) {
-			//pause game
 			if (startGame && !Paused) {
 				PauseGame ();
 			}
 		} else {
-			//continue game
 			if (startGame && Paused) {
 				PauseGame ();
 			}
@@ -102,57 +88,46 @@ public class GameController_TapToKill : BaseGameController {
 
 	#region MainLogic
 	private void InitGame () {
-		// keep this object alive
 		DontDestroyOnLoad (this.gameObject);
-
-		// init nemuManager ref
+		
 		if (!menuManager) {
 			menuManager = MenuManager_TapToKill.Instance;
 		}
-
-		// chack playerManager ref
+		
 		if (!playerManager) {
 			playerManager = PlayerManager_TapToKill.Instance;
 		}
-
-		// init soundManager
+		
 		if (!soundManager) {
 			soundManager = BaseSoundController.Instance;
 		}
-
-		// init musicManager
+		
 		if (!musicManager) {
 			musicManager = BaseMusicController.Instance;
 		}
-
-		// initialize a timer
+		
 		theTimer = ScriptableObject.CreateInstance<TimerClass>();
 	}
 
 	public override void StartGame() {
 		if (connectionGame) {
 			startGame = true;
-
-			// start Timer
+			
 			theTimer.StartTimer ();
-
-			// get time
+			
 			timePlay = 0.0f;
 			lastSpawnTime = timePlay;
-			betweaneSpawnTime = timeBetweaneSpawn;
+			betweaneSpawnTime = timeBetweenSpawn;
 			lastFrequenceSpawnTime = theTimer.GetTime ();
-
-			// player manager
+			
 			playerManager.GameStart ();
-
-			// init interface
+			
 			menuManager.HideWindowStartGame();
 			menuManager.ShowWindowInform ();
-			// update score UI
+			
 			Update_UI ();
-
-			// show message in adwiceWindow
-			WindowAdwiceShowText ("Good luck![n] Click < (Esc) for pouse game.");
+			
+			WindowAdwiceShowText ("Good luck![n] Click < (Esc) for pause game.");
 		} else {
 			WindowAdwiceShowText ("Please connect to Server!");
 		}
@@ -161,20 +136,16 @@ public class GameController_TapToKill : BaseGameController {
 	public override void ExitGame ()
 	{
 		startGame = false;
-
-		// player manager save progress
+		
 		playerManager.GameFinished();
 	}
 
 	public override void RestartGameButtonPressed ()
 	{
-		// player manager
 		playerManager.GameFinished();
-
-		// reset Timer
+		
 		theTimer.ResetTimer();
-
-		// start game
+		
 		StartGame ();
 	}
 
@@ -194,19 +165,18 @@ public class GameController_TapToKill : BaseGameController {
 		if (time - lastSpawnTime > betweaneSpawnTime) {
 			GameObject objDrop = GetRandomGameObject ();
 			Vector3 posDrop = GetRandomPossition ();
-
-			// instantiate? set parrent
-			var newGO = SpawnController.Instance.Spawn (objDrop, posDrop, Quaternion.identity);
-			newGO.parent = spawnParent;
+			
+			var newGameObject = SpawnController.Instance.Spawn (objDrop, posDrop, Quaternion.identity);
+			newGameObject.parent = spawnParent;
 
 			lastSpawnTime = time;
 		}
 	}
 
 	private void SpawnFrequentManager(float time) {
-		if (betweaneSpawnTime > timeLimitBetweaneSpawn) {
-			if (time - lastFrequenceSpawnTime > timeFrequenceSpawn) {
-				betweaneSpawnTime -= timeDecreaceStep;
+		if (betweaneSpawnTime > timeLimitBetweenSpawn) {
+			if (time - lastFrequenceSpawnTime > timeFrequencySpawn) {
+				betweaneSpawnTime -= timeDecreaseStep;
 
 				lastFrequenceSpawnTime = time;
 			}
@@ -227,13 +197,10 @@ public class GameController_TapToKill : BaseGameController {
 
 	#region PlayerManager
 	public void AddBonus(int val) {
-		// add score in Data
 		playerManager.AddScore (val);
-
-		// update score UI
+		
 		Update_UI ();
-
-		// play sound
+		
 		if (val > 0) {
 			IncreaseScore_Sound ();
 		} else {
@@ -243,25 +210,24 @@ public class GameController_TapToKill : BaseGameController {
 
 	public void ConnectToServer() {
 		if (!connectionGame) {
-			// try connect to Server
 			playerManager.ConnectServer ();
 
 			menuManager.UpdateConectionText ("[c=blue]Connecting...[c]");
 		}
 	}
 
-	public void SaccesConnectToServer() {
+	public void SuccessConnectToServer() {
 		connectionGame = true;
 
 		menuManager.UpdateConectionText ("[c=green]Connected...[c]");
-		WindowAdwiceShowText ("- Sacces connect to server!", 2);
+		WindowAdwiceShowText ("- Success connect to server!", 2);
 	}
 
 	public void FailConnectToServer() {
 		connectionGame = false;
 
 		menuManager.UpdateConectionText ("[c=red]Not Connected...[c]");
-		WindowAdwiceShowText ("- Fail connect to server! Chack connection to internet.");
+		WindowAdwiceShowText ("- Fail connect to server! Check connection to internet.");
 	}
 	#endregion
 
@@ -272,7 +238,7 @@ public class GameController_TapToKill : BaseGameController {
 	}
 
 	private void UpdateScore_UI() {
-		string res = string.Format ("{0}\\{1}", playerManager.GetScore (), playerManager.GetHighScore ());
+		string res = $"{playerManager.GetScore()}\\{playerManager.GetHighScore()}";
 
 		menuManager.UpdateScore (res);
 	}

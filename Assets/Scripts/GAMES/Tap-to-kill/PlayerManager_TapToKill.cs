@@ -26,14 +26,13 @@ public class PlayerManager_TapToKill : BasePlayerManager
 	}
 
 	#region MainLogic
-	public override void Init()
+
+	protected override void Init()
 	{
-		// keep this object alive
 		DontDestroyOnLoad(this.gameObject);
 
 		base.Init();
-
-		// init instance
+		
 		if (Instance == null)
 		{
 			Instance = this;
@@ -46,10 +45,8 @@ public class PlayerManager_TapToKill : BasePlayerManager
 
 	private void StartInit()
 	{
-		// init Player Data
 		DataManager.SetName("Player");
-
-		// set events
+		
 		serverSuccessConnect.AddListener(SaccesConectServet);
 		serverFailConnect.AddListener(FailConectServet);
 	}
@@ -57,8 +54,7 @@ public class PlayerManager_TapToKill : BasePlayerManager
 	public override void GameStart()
 	{
 		base.GameStart();
-
-		// clear data
+		
 		DataManager.SetScore(0);
 		DataManager.SetHighScore(RestoreHighScore());
 	}
@@ -66,14 +62,11 @@ public class PlayerManager_TapToKill : BasePlayerManager
 	public override void GameFinished()
 	{
 		base.GameFinished();
-
-		// check save data
+		
 		if (needSavePlayerPrefs)
 		{
-			// update high score
 			DataManager.SetHighScore(DataManager.GetScore());
-
-			// save in pref
+			
 			SaveHighScore();
 
 			needSavePlayerPrefs = false;
@@ -83,16 +76,14 @@ public class PlayerManager_TapToKill : BasePlayerManager
 	public void AddScore(int val)
 	{
 		DataManager.AddScore(val);
-
-		// check highScore
+		
 		int score = DataManager.GetScore();
 		int highScore = DataManager.GetHighScore();
 		
 		if (!needSavePlayerPrefs && score > highScore)
 		{
 			needSavePlayerPrefs = true;
-
-			// set message in AdviceWindow
+			
 			gameController.WindowAdwiceShowText("[c=blue]Congratulations, you have a new record![c]");
 		}
 	}
@@ -162,13 +153,12 @@ public class PlayerManager_TapToKill : BasePlayerManager
 
 	private void SaccesConectServet()
 	{
-		gameController.SaccesConnectToServer();
+		gameController.SuccessConnectToServer();
 	}
 
 	private void FailConectServet()
 	{
 		gameController.FailConnectToServer();
 	}
-
 	#endregion
 }

@@ -57,8 +57,7 @@ public class BaseMenuController : MonoBehaviour
 	protected virtual void RestoreOptionsPref()
 	{
 		string stKey = "";
-
-		// set up default options, if they have been saved out to prefs already
+		
 		stKey = $"{gamePrefsName}_SFXVol";
 		if (PlayerPrefs.HasKey(stKey))
 		{
@@ -66,7 +65,6 @@ public class BaseMenuController : MonoBehaviour
 		}
 		else
 		{
-			// if we are missing an SFXVol key, we won't got audio defaults set up
 			audioSFXSliderValue = 1;
 		}
 
@@ -77,11 +75,9 @@ public class BaseMenuController : MonoBehaviour
 		}
 		else
 		{
-			// defaults set up
 			audioMusicSliderValue = 1;
 		}
-
-		//set in UI
+		
 		if (audioSFXSlider != null)
 		{
 			audioSFXSlider.value = audioSFXSliderValue;
@@ -312,67 +308,54 @@ public class BaseMenuController : MonoBehaviour
 	#region PredefineEvents
 	protected virtual void ActivateMenuEvent()
 	{
-
 	}
 
 	protected virtual void DisActivateMenuEvent()
 	{
-
 	}
 
 	protected virtual void ChangeMenuEvent(int number)
 	{
-
 	}
 
 	protected virtual void ActivateWindowEvent()
 	{
-
 	}
 
 	protected virtual void DisActivateWindowEvent()
 	{
-
 	}
 
 	protected virtual void ChangeWindowEvent(int number)
 	{
-
 	}
 
 	protected virtual void ActivateConsoleWEvent()
 	{
-
 	}
 
 	protected virtual void DisActivateConsoleWEvent()
 	{
-
 	}
 
 	protected virtual void ChangeConsoleWEvent(int number)
 	{
-
 	}
 
 	protected virtual void ActivateAdviceWEvent()
 	{
-
 	}
 
 	protected virtual void DisActivateAdviceWEvent()
 	{
-
 	}
 
 	protected virtual void ActivateInformWEvent()
 	{
-
 	}
 
 	protected virtual void DisActivateInformWEvent()
 	{
-
 	}
 	#endregion
 
@@ -417,8 +400,7 @@ public class BaseMenuController : MonoBehaviour
 		windowActive = -1;
 
 		WindowDisActivate_Close();
-
-		//have some change options save it
+		
 		if (needSaveOptions)
 		{
 			SaveOptionsPrefs();
@@ -467,8 +449,7 @@ public class BaseMenuController : MonoBehaviour
 		ConsoleWindowDisActivate_Close();
 		
 		DisActivateConsoleWEvent();
-
-		//have some change options save it
+		
 		if (needSaveOptions)
 		{
 			SaveOptionsPrefs();
@@ -649,7 +630,6 @@ public class BaseMenuController : MonoBehaviour
 	{
 		if (HasSpecKeyText(st))
 		{
-			// in this override place set convert
 		}
 
 		return st;

@@ -12,12 +12,10 @@ public class SpawnController : ScriptableObject
 	{
 		if (instance != null)
 		{
-			// drop out if instance exists, to avoid generating duplicates
 			Debug.LogWarning("Tried to generate more than one instance of singleton SpawnController.");
 			return;
 		}
-
-		// as no instance already exists, we can safely set instance to this one
+		
 		instance = this;
 	}
 
@@ -25,35 +23,28 @@ public class SpawnController : ScriptableObject
 	{
 		get
 		{
-			// check instance already exists
 			if (instance == null)
 			{
-				// no instance exists yet, so we go ahead and create one
-				ScriptableObject.CreateInstance<SpawnController>(); // new SpawnController ();
+				ScriptableObject.CreateInstance<SpawnController>();
 			}
-
-			// now we pass the reference to this instance back
+			
 			return instance;
 		}
 	}
 	
 	public Transform Spawn(GameObject anObject, Vector3 aPosition, Quaternion aRotation)
 	{
-		// instantiate the object
 		tempGO = (GameObject)Instantiate(anObject, aPosition, aRotation);
 		tempTrans = tempGO.transform;
-
-		// return the object to whatever was calling
+		
 		return tempTrans;
 	}
 	
-	public GameObject SpawnGO(GameObject anObject, Vector3 aPosition, Quaternion aRotation)
+	public GameObject SpawnGameObject(GameObject anObject, Vector3 aPosition, Quaternion aRotation)
 	{
-		// instantiate the object
 		tempGO = (GameObject)Instantiate(anObject, aPosition, aRotation);
 		tempTrans = tempGO.transform;
-
-		// return the object to whatever was calling
+		
 		return tempGO;
 	}
 }

@@ -7,12 +7,10 @@ public class BaseGameController : MonoBehaviour
 	
 	public virtual void StartGame()
 	{
-		// do start game functions
 	}
 
 	public virtual void ExitGame()
 	{
-		// do end game functions
 	}
 
 	public virtual void RestartGameButtonPressed()
@@ -22,24 +20,17 @@ public class BaseGameController : MonoBehaviour
 
 	public bool Paused
 	{
-		get
-		{
-			// get paused
-			return paused;
-		}
+		get => paused;
 		set
 		{
-			// set paused 
 			paused = value;
 
 			if (paused)
 			{
-				// pause time
 				Time.timeScale = 0f;
 			}
 			else
 			{
-				// unpause Unity
 				Time.timeScale = 1f;
 			}
 		}
