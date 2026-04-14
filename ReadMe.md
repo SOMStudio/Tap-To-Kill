@@ -30,6 +30,6 @@ Additional:
 4) Added sounds, music in the game (and the ability to adjust the volume in the Settings window).
 5) Confirmation dialog window when you exit the game.
 
-## Unity 2019
+## Unity 2022
 
 ![Tap-to-kill](screenshot.png)
