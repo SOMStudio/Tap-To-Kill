@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [AddComponentMenu("SOM Studio/Tap-To-Kill/Game Controller")]
-public class GameController_TapToKill : BaseGameController {
+public class GameController : BaseGameController {
 
 	[Header("Spawn settings")]
 	public GameObject[] spawnList;
@@ -31,13 +31,13 @@ public class GameController_TapToKill : BaseGameController {
 	private TimerClass theTimer;
 
 	[System.NonSerialized]
-	public static GameController_TapToKill Instance;
+	public static GameController Instance;
 	
 	[Header("Managers")]
 	[SerializeField]
-	private MenuManager_TapToKill menuManager;
+	private MenuManager menuManager;
 	[SerializeField]
-	private PlayerManager_TapToKill playerManager;
+	private PlayerManager playerManager;
 	[SerializeField]
 	private BaseSoundController soundManager;
 	[SerializeField]
@@ -92,11 +92,11 @@ public class GameController_TapToKill : BaseGameController {
 		DontDestroyOnLoad (this.gameObject);
 		
 		if (!menuManager) {
-			menuManager = MenuManager_TapToKill.Instance;
+			menuManager = MenuManager.Instance;
 		}
 		
 		if (!playerManager) {
-			playerManager = PlayerManager_TapToKill.Instance;
+			playerManager = PlayerManager.Instance;
 		}
 		
 		if (!soundManager) {

@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using System.Collections;
 
 [AddComponentMenu("SOM Studio/Tap-To-Kill/Player Manager")]
-public class PlayerManager_TapToKill : BasePlayerManager
+public class PlayerManager : BasePlayerManager
 {
 	public string gamePrefsName = "DefaultGame";
 	
@@ -12,9 +12,9 @@ public class PlayerManager_TapToKill : BasePlayerManager
 
 	private bool needSavePlayerPrefs;
 
-	[System.NonSerialized] public static PlayerManager_TapToKill Instance;
+	[System.NonSerialized] public static PlayerManager Instance;
 
-	private GameController_TapToKill gameController;
+	private GameController gameController;
 	
 	private void Start()
 	{
@@ -22,7 +22,7 @@ public class PlayerManager_TapToKill : BasePlayerManager
 
 		if (!gameController)
 		{
-			gameController = GameController_TapToKill.Instance;
+			gameController = GameController.Instance;
 		}
 	}
 

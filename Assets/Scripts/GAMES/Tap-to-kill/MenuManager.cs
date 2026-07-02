@@ -2,14 +2,14 @@
 using UnityEngine.UI;
 
 [AddComponentMenu("SOM Studio/Tap-To-Kill/Menu Manager")]
-public class MenuManager_TapToKill : BaseMenuController {
+public class MenuManager : BaseMenuController {
 	[Header("TapToKill_Settings")]
 	public Text connectionText;
 
 	[System.NonSerialized]
-	public static MenuManager_TapToKill Instance;
+	public static MenuManager Instance;
 
-	private GameController_TapToKill gameController;
+	private GameController gameController;
 
 	private void Awake () {
 		if (Instance == null) {
@@ -23,7 +23,7 @@ public class MenuManager_TapToKill : BaseMenuController {
 		base.Start ();
 
 		if (!gameController) {
-			gameController = GameController_TapToKill.Instance;
+			gameController = GameController.Instance;
 		}
 	}
 
