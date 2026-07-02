@@ -1,39 +1,42 @@
 using UnityEngine;
 
-public class ExtendedCustomMonoBehaviour2D : MonoBehaviour
+namespace SOMStudio.TapToKill.Scripts.Base
 {
-	[Header("Base")]
-	protected Transform myTransform;
-	protected GameObject myGameObject;
-	protected Rigidbody2D myBody;
+	public class ExtendedCustomMonoBehaviour2D : MonoBehaviour
+	{
+		[Header("Base")]
+		protected Transform myTransform;
+		protected GameObject myGameObject;
+		protected Rigidbody2D myBody;
 
-	protected bool didInit;
-	protected bool canControl;
+		protected bool didInit;
+		protected bool canControl;
 
-	protected int id;
+		protected int id;
 	
-	protected virtual void Init()
-	{
-		if (!myTransform)
+		protected virtual void Init()
 		{
-			myTransform = transform;
+			if (!myTransform)
+			{
+				myTransform = transform;
+			}
+
+			if (!myGameObject)
+			{
+				myGameObject = gameObject;
+			}
+
+			if (!myBody)
+			{
+				myBody = GetComponent<Rigidbody2D>();
+			}
+
+			didInit = true;
 		}
 
-		if (!myGameObject)
+		protected virtual void SetID(int anID)
 		{
-			myGameObject = gameObject;
+			id = anID;
 		}
-
-		if (!myBody)
-		{
-			myBody = GetComponent<Rigidbody2D>();
-		}
-
-		didInit = true;
-	}
-
-	protected virtual void SetID(int anID)
-	{
-		id = anID;
 	}
 }

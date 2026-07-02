@@ -1,38 +1,41 @@
 using UnityEngine;
 
-public class BasePlayerManager : MonoBehaviour
+namespace SOMStudio.TapToKill.Scripts.Base
 {
-	[SerializeField] protected bool didInit;
-	
-	[SerializeField] protected BaseUserManager dataManager;
-	
-	private void Awake()
+	public class BasePlayerManager : MonoBehaviour
 	{
-		Init();
-	}
-
-	protected virtual void Init()
-	{
-		if (!dataManager)
+		[SerializeField] protected bool didInit;
+	
+		[SerializeField] protected BaseUserManager dataManager;
+	
+		private void Awake()
 		{
-			dataManager = gameObject.GetComponent<BaseUserManager>();
-
-			if (!dataManager)
-				dataManager = gameObject.AddComponent<BaseUserManager>();
+			Init();
 		}
+
+		protected virtual void Init()
+		{
+			if (!dataManager)
+			{
+				dataManager = gameObject.GetComponent<BaseUserManager>();
+
+				if (!dataManager)
+					dataManager = gameObject.AddComponent<BaseUserManager>();
+			}
 		
-		dataManager.GetDefaultData();
+			dataManager.GetDefaultData();
 
-		didInit = true;
-	}
+			didInit = true;
+		}
 
-	public virtual void GameFinished()
-	{
-		dataManager.SetIsFinished(true);
-	}
+		public virtual void GameFinished()
+		{
+			dataManager.SetIsFinished(true);
+		}
 
-	public virtual void GameStart()
-	{
-		dataManager.SetIsFinished(false);
+		public virtual void GameStart()
+		{
+			dataManager.SetIsFinished(false);
+		}
 	}
 }

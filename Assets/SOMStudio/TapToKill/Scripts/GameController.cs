@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using SOMStudio.TapToKill.Scripts.Base;
+using SOMStudio.TapToKill.Scripts.Spawning;
+using SOMStudio.TapToKill.Scripts.Utility;
+using UnityEngine;
 
 [AddComponentMenu("SOM Studio/Tap-To-Kill/Game Controller")]
 public class GameController : BaseGameController {
@@ -107,7 +110,7 @@ public class GameController : BaseGameController {
 			musicManager = BaseMusicController.Instance;
 		}
 		
-		theTimer = ScriptableObject.CreateInstance<TimerClass>();
+		theTimer = new TimerClass();
 	}
 
 	public override void StartGame() {

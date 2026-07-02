@@ -1,10 +1,10 @@
-﻿namespace Directions
+﻿namespace SOMStudio.TapToKill.Scripts.Enums
 {
 	public enum Direction
 	{
-		left,
-		right,
-		up,
-		down
+		Left,
+		Right,
+		Up,
+		Down
 	}
 }

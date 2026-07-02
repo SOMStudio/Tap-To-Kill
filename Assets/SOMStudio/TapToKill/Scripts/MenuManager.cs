@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SOMStudio.TapToKill.Scripts.Base;
+using UnityEngine;
 using UnityEngine.UI;
 
 [AddComponentMenu("SOM Studio/Tap-To-Kill/Menu Manager")]

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SOMStudio.TapToKill.Scripts.Base;
+using UnityEngine;
 
 [AddComponentMenu("SOM Studio/Tap-To-Kill/Click Manager")]
 public class ClickManager : ExtendedCustomMonoBehaviour2D

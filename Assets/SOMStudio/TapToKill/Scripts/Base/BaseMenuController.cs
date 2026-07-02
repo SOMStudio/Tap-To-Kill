@@ -1,655 +1,655 @@
 ﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
-#if UNITY_EDITOR
+using SOMStudio.TapToKill.Scripts.Animation;
 using UnityEditor;
-#endif
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
-public class BaseMenuController : MonoBehaviour
+namespace SOMStudio.TapToKill.Scripts.Base
 {
-	public bool didInit;
-
-	[Header("Base Settings")] public string gamePrefsName = "DefaultGame";
-	
-	public Slider audioSfxSlider;
-	[SerializeField] private float audioSfxSliderValue;
-	
-	public Slider audioMusicSlider;
-	[SerializeField] private float audioMusicSliderValue;
-
-	private bool needSaveOptions;
-
-	[Header("Main window list")]
-	public AnimationOpenClose[] windowAnimations;
-
-	[Header("DisActivate window")]
-	public AnimationOpenClose windowDisActivateAnimation;
-	public AnimationOpenClose consoleWindowDisActivateAnimation;
-
-	[Header("Menu Data")]
-	[SerializeField] protected int windowActive = -1;
-	[SerializeField] protected int consoleWindowActive = -1;
-
-	[Header("StartGame window")]
-	[SerializeField] protected bool windowStartActive;
-	public AnimationOpenClose windowStartGameAnimation;
-
-	[Header("Advice window")] 
-	public AnimationOpenClose windowAdviceAnimation;
-	public Text windowAdviceText;
-
-	[Header("Inform window")]
-	public AnimationOpenClose windowInformAnimation;
-	public Text[] windowInformTextList;
-
-	[Header("Console windows")]
-	public Text consoleWInYesNoTextHead;
-
-	private readonly UnityEvent consoleWindowYesNoActionYes = new UnityEvent();
-	
-	protected virtual void Start()
+	public class BaseMenuController : MonoBehaviour
 	{
-		RestoreOptionsPref();
+		public bool didInit;
 
-		if (windowStartActive)
-		{
-			ShowWindowStartGame();
-		}
-	}
+		[Header("Base Settings")] public string gamePrefsName = "DefaultGame";
+	
+		public Slider audioSfxSlider;
+		[SerializeField] private float audioSfxSliderValue;
+	
+		public Slider audioMusicSlider;
+		[SerializeField] private float audioMusicSliderValue;
 
-	#region MainLogic
-	protected virtual void RestoreOptionsPref()
-	{
-		string stringKey = $"{gamePrefsName}_SFXVol";
-		if (PlayerPrefs.HasKey(stringKey))
+		private bool needSaveOptions;
+
+		[Header("Main window list")]
+		public AnimationOpenClose[] windowAnimations;
+
+		[Header("DisActivate window")]
+		public AnimationOpenClose windowDisActivateAnimation;
+		public AnimationOpenClose consoleWindowDisActivateAnimation;
+
+		[Header("Menu Data")]
+		[SerializeField] protected int windowActive = -1;
+		[SerializeField] protected int consoleWindowActive = -1;
+
+		[Header("StartGame window")]
+		[SerializeField] protected bool windowStartActive;
+		public AnimationOpenClose windowStartGameAnimation;
+
+		[Header("Advice window")] 
+		public AnimationOpenClose windowAdviceAnimation;
+		public Text windowAdviceText;
+
+		[Header("Inform window")]
+		public AnimationOpenClose windowInformAnimation;
+		public Text[] windowInformTextList;
+
+		[Header("Console windows")]
+		public Text consoleWInYesNoTextHead;
+
+		private readonly UnityEvent consoleWindowYesNoActionYes = new UnityEvent();
+	
+		protected virtual void Start()
 		{
-			audioSfxSliderValue = PlayerPrefs.GetFloat(stringKey);
-		}
-		else
-		{
-			audioSfxSliderValue = 1;
+			RestoreOptionsPref();
+
+			if (windowStartActive)
+			{
+				ShowWindowStartGame();
+			}
 		}
 
-		stringKey = $"{gamePrefsName}_MusicVol";
-		if (PlayerPrefs.HasKey(stringKey))
+		#region MainLogic
+		protected virtual void RestoreOptionsPref()
 		{
-			audioMusicSliderValue = PlayerPrefs.GetFloat(stringKey);
-		}
-		else
-		{
-			audioMusicSliderValue = 1;
-		}
+			string stringKey = $"{gamePrefsName}_SFXVol";
+			if (PlayerPrefs.HasKey(stringKey))
+			{
+				audioSfxSliderValue = PlayerPrefs.GetFloat(stringKey);
+			}
+			else
+			{
+				audioSfxSliderValue = 1;
+			}
+
+			stringKey = $"{gamePrefsName}_MusicVol";
+			if (PlayerPrefs.HasKey(stringKey))
+			{
+				audioMusicSliderValue = PlayerPrefs.GetFloat(stringKey);
+			}
+			else
+			{
+				audioMusicSliderValue = 1;
+			}
 		
-		if (audioSfxSlider != null)
-		{
-			audioSfxSlider.value = audioSfxSliderValue;
+			if (audioSfxSlider != null)
+			{
+				audioSfxSlider.value = audioSfxSliderValue;
+			}
+
+			if (audioMusicSlider != null)
+			{
+				audioMusicSlider.value = audioMusicSliderValue;
+			}
+
+			didInit = true;
 		}
 
-		if (audioMusicSlider != null)
+		protected virtual void SaveOptionsPrefs()
 		{
-			audioMusicSlider.value = audioMusicSliderValue;
+			string stKey = $"{gamePrefsName}_SFXVol";
+			PlayerPrefs.SetFloat(stKey, audioSfxSliderValue);
+			stKey = $"{gamePrefsName}_MusicVol";
+			PlayerPrefs.SetFloat(stKey, audioMusicSliderValue);
 		}
 
-		windowAdviceText.text = "";
-
-		didInit = true;
-	}
-
-	protected virtual void SaveOptionsPrefs()
-	{
-		string stKey = $"{gamePrefsName}_SFXVol";
-		PlayerPrefs.SetFloat(stKey, audioSfxSliderValue);
-		stKey = $"{gamePrefsName}_MusicVol";
-		PlayerPrefs.SetFloat(stKey, audioMusicSliderValue);
-	}
-
-	public void ChangeSfxVal(float val)
-	{
-		audioSfxSliderValue = val;
-
-		if (didInit)
+		public void ChangeSfxVal(float val)
 		{
-			SaveOptionsPrefs();
+			audioSfxSliderValue = val;
+
+			if (didInit)
+			{
+				SaveOptionsPrefs();
+			}
 		}
-	}
 
-	public void ChangeMusicVal(float val)
-	{
-		audioMusicSliderValue = val;
-
-		if (didInit)
+		public void ChangeMusicVal(float val)
 		{
-			SaveOptionsPrefs();
-		}
-	}
+			audioMusicSliderValue = val;
 
-	protected virtual void ExitGame()
-	{
+			if (didInit)
+			{
+				SaveOptionsPrefs();
+			}
+		}
+
+		protected virtual void ExitGame()
+		{
 #if UNITY_EDITOR
-		EditorApplication.isPlaying = false;
+			EditorApplication.isPlaying = false;
 #else
 		Application.Quit();
 #endif
-	}
-	#endregion
+		}
+		#endregion
 
-	#region MenuAnimations
-	private void PlayWindowAnim_Open(int number)
-	{
-		if (number < windowAnimations.Length)
+		#region MenuAnimations
+		private void PlayWindowAnim_Open(int number)
 		{
-			AnimationOpenClose activeA = windowAnimations[number];
-
-			if (activeA)
+			if (number < windowAnimations.Length)
 			{
-				if (!activeA.IsOpen())
+				AnimationOpenClose activeA = windowAnimations[number];
+
+				if (activeA)
 				{
-					activeA.Open();
+					if (!activeA.IsOpen())
+					{
+						activeA.Open();
+					}
 				}
 			}
 		}
-	}
 
-	private void PlayWindowAnim_Close(int number)
-	{
-		if (number < windowAnimations.Length)
+		private void PlayWindowAnim_Close(int number)
 		{
-			AnimationOpenClose activeA = windowAnimations[number];
-
-			if (activeA)
+			if (number < windowAnimations.Length)
 			{
-				if (activeA.IsOpen())
+				AnimationOpenClose activeA = windowAnimations[number];
+
+				if (activeA)
 				{
-					activeA.Close();
+					if (activeA.IsOpen())
+					{
+						activeA.Close();
+					}
 				}
 			}
 		}
-	}
 	
-	private void WindowDisActivate_Open()
-	{
-		if (windowDisActivateAnimation)
+		private void WindowDisActivate_Open()
 		{
-			windowDisActivateAnimation.Open();
+			if (windowDisActivateAnimation)
+			{
+				windowDisActivateAnimation.Open();
+			}
 		}
-	}
 
-	private void WindowDisActivate_Close()
-	{
-		if (windowDisActivateAnimation)
+		private void WindowDisActivate_Close()
 		{
-			windowDisActivateAnimation.Close();
+			if (windowDisActivateAnimation)
+			{
+				windowDisActivateAnimation.Close();
+			}
 		}
-	}
 	
-	private void ConsoleWindowDisActivate_Open()
-	{
-		if (consoleWindowDisActivateAnimation)
+		private void ConsoleWindowDisActivate_Open()
 		{
-			consoleWindowDisActivateAnimation.Open();
+			if (consoleWindowDisActivateAnimation)
+			{
+				consoleWindowDisActivateAnimation.Open();
+			}
 		}
-	}
 
-	private void ConsoleWindowDisActivate_Close()
-	{
-		if (consoleWindowDisActivateAnimation)
+		private void ConsoleWindowDisActivate_Close()
 		{
-			consoleWindowDisActivateAnimation.Close();
+			if (consoleWindowDisActivateAnimation)
+			{
+				consoleWindowDisActivateAnimation.Close();
+			}
 		}
-	}
 	
-	private void PlayWindowStartGameAnim_Open()
-	{
-		if (windowStartGameAnimation)
+		private void PlayWindowStartGameAnim_Open()
 		{
-			AnimationOpenClose activeA = windowStartGameAnimation;
-
-			if (activeA)
+			if (windowStartGameAnimation)
 			{
-				if (!activeA.IsOpen())
+				AnimationOpenClose activeA = windowStartGameAnimation;
+
+				if (activeA)
 				{
-					activeA.Open();
+					if (!activeA.IsOpen())
+					{
+						activeA.Open();
+					}
 				}
 			}
 		}
-	}
 
-	private void PlayWindowStartGameAnim_Close()
-	{
-		if (windowStartGameAnimation)
+		private void PlayWindowStartGameAnim_Close()
 		{
-			AnimationOpenClose activeA = windowStartGameAnimation;
-
-			if (activeA)
+			if (windowStartGameAnimation)
 			{
-				if (activeA.IsOpen())
+				AnimationOpenClose activeA = windowStartGameAnimation;
+
+				if (activeA)
 				{
-					activeA.Close();
+					if (activeA.IsOpen())
+					{
+						activeA.Close();
+					}
 				}
 			}
 		}
-	}
 	
-	private void PlayWindowAdviceAnim_Open()
-	{
-		if (windowAdviceAnimation)
+		private void PlayWindowAdviceAnim_Open()
 		{
-			AnimationOpenClose activeA = windowAdviceAnimation;
-
-			if (activeA)
+			if (windowAdviceAnimation)
 			{
-				if (!activeA.IsOpen())
-				{
-					activeA.Open();
+				AnimationOpenClose activeA = windowAdviceAnimation;
 
-					ActivateAdviceWEvent();
+				if (activeA)
+				{
+					if (!activeA.IsOpen())
+					{
+						activeA.Open();
+
+						ActivateAdviceWEvent();
+					}
 				}
 			}
 		}
-	}
 
-	private void PlayWindowAdviceAnim_Close()
-	{
-		if (windowAdviceAnimation)
+		private void PlayWindowAdviceAnim_Close()
 		{
-			AnimationOpenClose activeA = windowAdviceAnimation;
-
-			if (activeA)
+			if (windowAdviceAnimation)
 			{
-				if (activeA.IsOpen())
+				AnimationOpenClose activeA = windowAdviceAnimation;
+
+				if (activeA)
 				{
-					activeA.Close();
+					if (activeA.IsOpen())
+					{
+						activeA.Close();
 
-					DisActivateAdviceWEvent();
+						DisActivateAdviceWEvent();
 
-					Invoke(nameof(WindowAdviceClearText), 0.2f);
+						Invoke(nameof(WindowAdviceClearText), 0.2f);
+					}
 				}
 			}
 		}
-	}
 	
-	private void PlayWindowInformAnim_Open()
-	{
-		if (windowInformAnimation)
+		private void PlayWindowInformAnim_Open()
 		{
-			AnimationOpenClose activeA = windowInformAnimation;
-
-			if (activeA)
+			if (windowInformAnimation)
 			{
-				if (!activeA.IsOpen())
-				{
-					activeA.Open();
+				AnimationOpenClose activeA = windowInformAnimation;
 
-					ActivateInformWEvent();
+				if (activeA)
+				{
+					if (!activeA.IsOpen())
+					{
+						activeA.Open();
+
+						ActivateInformWEvent();
+					}
 				}
 			}
 		}
-	}
 
-	private void PlayWindowInformAnim_Close()
-	{
-		if (windowInformAnimation)
+		private void PlayWindowInformAnim_Close()
 		{
-			AnimationOpenClose activeA = windowInformAnimation;
-
-			if (activeA)
+			if (windowInformAnimation)
 			{
-				if (activeA.IsOpen())
-				{
-					activeA.Close();
+				AnimationOpenClose activeA = windowInformAnimation;
 
-					DisActivateInformWEvent();
+				if (activeA)
+				{
+					if (activeA.IsOpen())
+					{
+						activeA.Close();
+
+						DisActivateInformWEvent();
+					}
 				}
 			}
 		}
-	}
-	#endregion
+		#endregion
 
-	#region PredefineEvents
-	protected virtual void ActivateMenuEvent()
-	{
-	}
-
-	protected virtual void DisActivateMenuEvent()
-	{
-	}
-
-	protected virtual void ChangeMenuEvent(int number)
-	{
-	}
-
-	protected virtual void ActivateWindowEvent()
-	{
-	}
-
-	protected virtual void DisActivateWindowEvent()
-	{
-	}
-
-	protected virtual void ChangeWindowEvent(int number)
-	{
-	}
-
-	protected virtual void ActivateConsoleWEvent()
-	{
-	}
-
-	protected virtual void DisActivateConsoleWEvent()
-	{
-	}
-
-	protected virtual void ChangeConsoleWEvent(int number)
-	{
-	}
-
-	protected virtual void ActivateAdviceWEvent()
-	{
-	}
-
-	protected virtual void DisActivateAdviceWEvent()
-	{
-	}
-
-	protected virtual void ActivateInformWEvent()
-	{
-	}
-
-	protected virtual void DisActivateInformWEvent()
-	{
-	}
-	#endregion
-
-	#region WindowLogic
-	protected void ActivateWindow(int number)
-	{
-		if (windowActive == number)
+		#region PredefineEvents
+		protected virtual void ActivateMenuEvent()
 		{
-			DisActivateWindow();
 		}
-		else
+
+		protected virtual void DisActivateMenuEvent()
+		{
+		}
+
+		protected virtual void ChangeMenuEvent(int number)
+		{
+		}
+
+		protected virtual void ActivateWindowEvent()
+		{
+		}
+
+		protected virtual void DisActivateWindowEvent()
+		{
+		}
+
+		protected virtual void ChangeWindowEvent(int number)
+		{
+		}
+
+		protected virtual void ActivateConsoleWEvent()
+		{
+		}
+
+		protected virtual void DisActivateConsoleWEvent()
+		{
+		}
+
+		protected virtual void ChangeConsoleWEvent(int number)
+		{
+		}
+
+		protected virtual void ActivateAdviceWEvent()
+		{
+		}
+
+		protected virtual void DisActivateAdviceWEvent()
+		{
+		}
+
+		protected virtual void ActivateInformWEvent()
+		{
+		}
+
+		protected virtual void DisActivateInformWEvent()
+		{
+		}
+		#endregion
+
+		#region WindowLogic
+		protected void ActivateWindow(int number)
+		{
+			if (windowActive == number)
+			{
+				DisActivateWindow();
+			}
+			else
+			{
+				if (windowActive > -1)
+				{
+					PlayWindowAnim_Close(windowActive);
+				}
+
+				PlayWindowAnim_Open(number);
+
+				if (windowActive == -1)
+				{
+					WindowDisActivate_Open();
+				
+					ActivateWindowEvent();
+				}
+
+				windowActive = number;
+			
+				ChangeWindowEvent(number);
+			}
+		}
+
+		protected void DisActivateWindow()
 		{
 			if (windowActive > -1)
 			{
 				PlayWindowAnim_Close(windowActive);
+			
+				DisActivateWindowEvent();
 			}
 
-			PlayWindowAnim_Open(number);
+			windowActive = -1;
 
-			if (windowActive == -1)
-			{
-				WindowDisActivate_Open();
-				
-				ActivateWindowEvent();
-			}
-
-			windowActive = number;
-			
-			ChangeWindowEvent(number);
-		}
-	}
-
-	protected void DisActivateWindow()
-	{
-		if (windowActive > -1)
-		{
-			PlayWindowAnim_Close(windowActive);
-			
-			DisActivateWindowEvent();
-		}
-
-		windowActive = -1;
-
-		WindowDisActivate_Close();
+			WindowDisActivate_Close();
 		
-		if (needSaveOptions)
-		{
-			SaveOptionsPrefs();
+			if (needSaveOptions)
+			{
+				SaveOptionsPrefs();
 
-			needSaveOptions = !needSaveOptions;
+				needSaveOptions = !needSaveOptions;
+			}
 		}
-	}
 	
-	protected void ActivateConsoleWindow(int number)
-	{
-		if (consoleWindowActive == number)
+		protected void ActivateConsoleWindow(int number)
 		{
-			DisActivateConsoleWindow();
+			if (consoleWindowActive == number)
+			{
+				DisActivateConsoleWindow();
+			}
+			else
+			{
+				if (consoleWindowActive > -1)
+				{
+					PlayWindowAnim_Close(consoleWindowActive);
+				}
+
+				PlayWindowAnim_Open(number);
+
+				if (consoleWindowActive == -1)
+				{
+					ConsoleWindowDisActivate_Open();
+				
+					ActivateConsoleWEvent();
+				}
+
+				consoleWindowActive = number;
+			
+				ChangeConsoleWEvent(number);
+			}
 		}
-		else
+
+		protected void DisActivateConsoleWindow()
 		{
 			if (consoleWindowActive > -1)
 			{
 				PlayWindowAnim_Close(consoleWindowActive);
 			}
 
-			PlayWindowAnim_Open(number);
+			consoleWindowActive = -1;
 
-			if (consoleWindowActive == -1)
-			{
-				ConsoleWindowDisActivate_Open();
-				
-				ActivateConsoleWEvent();
-			}
-
-			consoleWindowActive = number;
-			
-			ChangeConsoleWEvent(number);
-		}
-	}
-
-	protected void DisActivateConsoleWindow()
-	{
-		if (consoleWindowActive > -1)
-		{
-			PlayWindowAnim_Close(consoleWindowActive);
-		}
-
-		consoleWindowActive = -1;
-
-		ConsoleWindowDisActivate_Close();
+			ConsoleWindowDisActivate_Close();
 		
-		DisActivateConsoleWEvent();
+			DisActivateConsoleWEvent();
 		
-		if (needSaveOptions)
-		{
-			SaveOptionsPrefs();
-
-			needSaveOptions = !needSaveOptions;
-		}
-	}
-	
-	public void ShowWindowStartGame()
-	{
-		PlayWindowStartGameAnim_Open();
-		windowStartActive = true;
-
-		if (IsInvoking(nameof(PlayWindowStartGameAnim_Close)))
-		{
-			CancelInvoke(nameof(PlayWindowStartGameAnim_Close));
-		}
-	}
-
-	public void HideWindowStartGame()
-	{
-		if (IsInvoking(nameof(PlayWindowStartGameAnim_Close)))
-		{
-
-		}
-		else
-		{
-			PlayWindowStartGameAnim_Close();
-			windowStartActive = false;
-		}
-	}
-	
-	protected void ShowWindowAdvice()
-	{
-		PlayWindowAdviceAnim_Open();
-
-		if (IsInvoking(nameof(PlayWindowAdviceAnim_Close)))
-		{
-			CancelInvoke(nameof(PlayWindowAdviceAnim_Close));
-		}
-	}
-
-	protected void HideWindowAdvice()
-	{
-		if (IsInvoking(nameof(PlayWindowAdviceAnim_Close)))
-		{
-
-		}
-		else
-		{
-			PlayWindowAdviceAnim_Close();
-		}
-	}
-
-	protected void ShowWindowAdviceAtTime(float timeShow)
-	{
-		PlayWindowAdviceAnim_Open();
-
-		if (IsInvoking(nameof(PlayWindowAdviceAnim_Close)))
-		{
-			CancelInvoke(nameof(PlayWindowAdviceAnim_Close));
-		}
-
-		Invoke(nameof(PlayWindowAdviceAnim_Close), timeShow);
-	}
-
-	protected void WindowAdviceSetText(string stAdvice)
-	{
-		if (windowAdviceText)
-		{
-			string stText = windowAdviceText.text;
-			string[] stRes = stText.Split(new[] { "\n", "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries);
-
-			if (stRes.Length > 2)
+			if (needSaveOptions)
 			{
-				for (int i = 1; i < stRes.Length; i++)
-				{
-					if (i == 1)
-					{
-						windowAdviceText.text = stRes[i];
-					}
-					else
-					{
-						windowAdviceText.text = $"{windowAdviceText.text}\n{stRes[i]}";
-					}
-				}
+				SaveOptionsPrefs();
+
+				needSaveOptions = !needSaveOptions;
 			}
+		}
+	
+		public void ShowWindowStartGame()
+		{
+			PlayWindowStartGameAnim_Open();
+			windowStartActive = true;
 
-			if (stRes.Length == 0)
+			if (IsInvoking(nameof(PlayWindowStartGameAnim_Close)))
 			{
-				windowAdviceText.text = ConvertSpecTextChar(stAdvice);
+				CancelInvoke(nameof(PlayWindowStartGameAnim_Close));
+			}
+		}
+
+		public void HideWindowStartGame()
+		{
+			if (IsInvoking(nameof(PlayWindowStartGameAnim_Close)))
+			{
+
 			}
 			else
 			{
-				windowAdviceText.text = $"{windowAdviceText.text}\n{ConvertSpecTextChar(stAdvice)}";
+				PlayWindowStartGameAnim_Close();
+				windowStartActive = false;
 			}
 		}
-	}
-
-	protected void WindowAdviceClearText()
-	{
-		windowAdviceText.text = "";
-	}
 	
-	public void ShowWindowInform()
-	{
-		PlayWindowInformAnim_Open();
-	}
-
-	public void HideWindowInform()
-	{
-		PlayWindowInformAnim_Close();
-	}
-
-	protected void WindowInformSetText(string stAdvice, int numText)
-	{
-		if (numText < windowInformTextList.Length)
+		protected void ShowWindowAdvice()
 		{
-			if (windowInformTextList[numText])
+			PlayWindowAdviceAnim_Open();
+
+			if (IsInvoking(nameof(PlayWindowAdviceAnim_Close)))
 			{
-				windowInformTextList[numText].text = ConvertSpecTextChar(stAdvice);
+				CancelInvoke(nameof(PlayWindowAdviceAnim_Close));
 			}
 		}
-	}
 
-	protected void WindowInformSetText_1(string stAdvice)
-	{
-		WindowInformSetText(stAdvice, 0);
-	}
-
-	protected void WindowInformSetText_2(string stAdvice)
-	{
-		WindowInformSetText(stAdvice, 1);
-	}
-
-	protected void WindowInformSetText_3(string stAdvice)
-	{
-		WindowInformSetText(stAdvice, 2);
-	}
-	
-	protected void ConsoleWinYesNo_SetTxt(string val)
-	{
-		consoleWInYesNoTextHead.text = ConvertSpecTextChar(val);
-	}
-
-	protected void ConsoleWinYesNo_SetYesAction(UnityAction val)
-	{
-		consoleWindowYesNoActionYes.AddListener(val);
-	}
-
-	protected void ConsoleWinYesNo_ClearYesAction()
-	{
-		consoleWindowYesNoActionYes.RemoveAllListeners();
-	}
-
-	protected void ConsoleWinYesNo_ButtonYes()
-	{
-		consoleWindowYesNoActionYes.Invoke();
-
-		DisActivateConsoleWindow();
-
-		ConsoleWinYesNo_ClearYesAction();
-	}
-
-	protected void ConsoleWinYesNo_ButtonNo()
-	{
-		DisActivateConsoleWindow();
-
-		ConsoleWinYesNo_ClearYesAction();
-	}
-	
-	protected virtual bool HasSpecKeyText(string st)
-	{
-		return false;
-	}
-
-	protected virtual string ConvertSpecKeyText(string st)
-	{
-		if (HasSpecKeyText(st))
+		protected void HideWindowAdvice()
 		{
+			if (IsInvoking(nameof(PlayWindowAdviceAnim_Close)))
+			{
+
+			}
+			else
+			{
+				PlayWindowAdviceAnim_Close();
+			}
 		}
 
-		return st;
-	}
-
-	protected string ConvertSpecTextChar(string st)
-	{
-		if (HasSpecKeyText(st))
+		protected void ShowWindowAdviceAtTime(float timeShow)
 		{
-			st = ConvertSpecKeyText(st);
+			PlayWindowAdviceAnim_Open();
+
+			if (IsInvoking(nameof(PlayWindowAdviceAnim_Close)))
+			{
+				CancelInvoke(nameof(PlayWindowAdviceAnim_Close));
+			}
+
+			Invoke(nameof(PlayWindowAdviceAnim_Close), timeShow);
 		}
+
+		protected void WindowAdviceSetText(string stAdvice)
+		{
+			if (windowAdviceText)
+			{
+				string stText = windowAdviceText.text;
+				string[] stRes = stText.Split(new[] { "\n", "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+
+				if (stRes.Length > 2)
+				{
+					for (int i = 1; i < stRes.Length; i++)
+					{
+						if (i == 1)
+						{
+							windowAdviceText.text = stRes[i];
+						}
+						else
+						{
+							windowAdviceText.text = $"{windowAdviceText.text}\n{stRes[i]}";
+						}
+					}
+				}
+
+				if (stRes.Length == 0)
+				{
+					windowAdviceText.text = ConvertSpecTextChar(stAdvice);
+				}
+				else
+				{
+					windowAdviceText.text = $"{windowAdviceText.text}\n{ConvertSpecTextChar(stAdvice)}";
+				}
+			}
+		}
+
+		protected void WindowAdviceClearText()
+		{
+			windowAdviceText.text = "";
+		}
+	
+		public void ShowWindowInform()
+		{
+			PlayWindowInformAnim_Open();
+		}
+
+		public void HideWindowInform()
+		{
+			PlayWindowInformAnim_Close();
+		}
+
+		protected void WindowInformSetText(string stAdvice, int numText)
+		{
+			if (numText < windowInformTextList.Length)
+			{
+				if (windowInformTextList[numText])
+				{
+					windowInformTextList[numText].text = ConvertSpecTextChar(stAdvice);
+				}
+			}
+		}
+
+		protected void WindowInformSetText_1(string stAdvice)
+		{
+			WindowInformSetText(stAdvice, 0);
+		}
+
+		protected void WindowInformSetText_2(string stAdvice)
+		{
+			WindowInformSetText(stAdvice, 1);
+		}
+
+		protected void WindowInformSetText_3(string stAdvice)
+		{
+			WindowInformSetText(stAdvice, 2);
+		}
+	
+		protected void ConsoleWinYesNo_SetTxt(string val)
+		{
+			consoleWInYesNoTextHead.text = ConvertSpecTextChar(val);
+		}
+
+		protected void ConsoleWinYesNo_SetYesAction(UnityAction val)
+		{
+			consoleWindowYesNoActionYes.AddListener(val);
+		}
+
+		protected void ConsoleWinYesNo_ClearYesAction()
+		{
+			consoleWindowYesNoActionYes.RemoveAllListeners();
+		}
+
+		protected void ConsoleWinYesNo_ButtonYes()
+		{
+			consoleWindowYesNoActionYes.Invoke();
+
+			DisActivateConsoleWindow();
+
+			ConsoleWinYesNo_ClearYesAction();
+		}
+
+		protected void ConsoleWinYesNo_ButtonNo()
+		{
+			DisActivateConsoleWindow();
+
+			ConsoleWinYesNo_ClearYesAction();
+		}
+	
+		protected virtual bool HasSpecKeyText(string st)
+		{
+			return false;
+		}
+
+		protected virtual string ConvertSpecKeyText(string st)
+		{
+			if (HasSpecKeyText(st))
+			{
+			}
+
+			return st;
+		}
+
+		protected string ConvertSpecTextChar(string st)
+		{
+			if (HasSpecKeyText(st))
+			{
+				st = ConvertSpecKeyText(st);
+			}
 		
-		if (st.IndexOf("[c=", StringComparison.Ordinal) >= 0)
-		{
-			st = st.Replace("[c=red]", "<color=red>").Replace("[c=blue]", "<color=blue>")
-				.Replace("[c=green]", "<color=green>").Replace("[c]", "</color>");
-		}
+			if (st.IndexOf("[c=", StringComparison.Ordinal) >= 0)
+			{
+				st = st.Replace("[c=red]", "<color=red>").Replace("[c=blue]", "<color=blue>")
+					.Replace("[c=green]", "<color=green>").Replace("[c]", "</color>");
+			}
 
-		return st.Replace("[n]", "\n").Replace("[t]", "\t");
+			return st.Replace("[n]", "\n").Replace("[t]", "\t");
+		}
+		#endregion
 	}
-	#endregion
 }

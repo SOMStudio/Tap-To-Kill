@@ -1,37 +1,40 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BaseGameController : MonoBehaviour
+namespace SOMStudio.TapToKill.Scripts.Base
 {
-	private bool paused;
+	public class BaseGameController : MonoBehaviour
+	{
+		private bool paused;
 	
-	public virtual void StartGame()
-	{
-	}
-
-	public virtual void ExitGame()
-	{
-	}
-
-	public virtual void RestartGameButtonPressed()
-	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-	}
-
-	public bool Paused
-	{
-		get => paused;
-		set
+		public virtual void StartGame()
 		{
-			paused = value;
+		}
 
-			if (paused)
+		public virtual void ExitGame()
+		{
+		}
+
+		public virtual void RestartGameButtonPressed()
+		{
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		}
+
+		public bool Paused
+		{
+			get => paused;
+			set
 			{
-				Time.timeScale = 0f;
-			}
-			else
-			{
-				Time.timeScale = 1f;
+				paused = value;
+
+				if (paused)
+				{
+					Time.timeScale = 0f;
+				}
+				else
+				{
+					Time.timeScale = 1f;
+				}
 			}
 		}
 	}

@@ -1,43 +1,46 @@
-﻿using UnityEngine;
-using Directions;
+﻿using SOMStudio.TapToKill.Scripts.Enums;
+using UnityEngine;
 
-[AddComponentMenu("SOM Studio/Tap-To-Kill/Utility/Alighn Screen Component")]
-[ExecuteInEditMode]
-public class AlighnScreenComponent : MonoBehaviour
+namespace SOMStudio.TapToKill.Scripts.Utility
 {
-	public Direction align = Direction.left;
-
-	private Camera mainCamera;
-	private Transform myTransform;
-
-	private void Start()
+	[AddComponentMenu("SOM Studio/Tap-To-Kill/Utility/Alighn Screen Component")]
+	[ExecuteInEditMode]
+	public class AlighnScreenComponent : MonoBehaviour
 	{
-		if (!mainCamera)
-		{
-			mainCamera = Camera.main;
-		}
+		public Direction align = Direction.Left;
 
-		if (!myTransform)
+		private Camera mainCamera;
+		private Transform myTransform;
+
+		private void Start()
 		{
-			myTransform = transform;
-		}
+			if (!mainCamera)
+			{
+				mainCamera = Camera.main;
+			}
+
+			if (!myTransform)
+			{
+				myTransform = transform;
+			}
 		
-		UpdatePosition();
-	}
+			UpdatePosition();
+		}
 	
-	private void UpdatePosition()
-	{
-		Vector3 alignVector = Vector3.zero;
-
-		if (align == Direction.left)
+		private void UpdatePosition()
 		{
-			alignVector = new Vector3(mainCamera.ScreenToWorldPoint(Vector2.zero).x, 0, 0);
-		}
-		else if (align == Direction.right)
-		{
-			alignVector = new Vector3(mainCamera.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x, 0, 0);
-		}
+			Vector3 alignVector = Vector3.zero;
 
-		myTransform.position = alignVector;
+			if (align == Direction.Left)
+			{
+				alignVector = new Vector3(mainCamera.ScreenToWorldPoint(Vector2.zero).x, 0, 0);
+			}
+			else if (align == Direction.Right)
+			{
+				alignVector = new Vector3(mainCamera.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x, 0, 0);
+			}
+
+			myTransform.position = alignVector;
+		}
 	}
 }

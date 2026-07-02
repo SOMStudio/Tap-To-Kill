@@ -1,49 +1,46 @@
 using UnityEngine;
 
-public class SpawnController : ScriptableObject
+namespace SOMStudio.TapToKill.Scripts.Spawning
 {
-	private Transform tempTrans;
-	private GameObject tempGameObject;
+	public class SpawnController
+	{
+		private Transform tempTrans;
+		private GameObject tempGameObject;
 
-	private static SpawnController instance;
+		private static SpawnController instance;
 	
-	public SpawnController()
-	{
-		if (instance != null)
+		public SpawnController()
 		{
-			Debug.LogWarning("Tried to generate more than one instance of singleton SpawnController.");
-			return;
-		}
-		
-		instance = this;
-	}
-
-	public static SpawnController Instance
-	{
-		get
-		{
-			if (instance == null)
+			if (instance != null)
 			{
-				CreateInstance<SpawnController>();
+				Debug.LogWarning("Tried to generate more than one instance of singleton SpawnController.");
+				return;
 			}
-			
-			return instance;
+		
+			instance = this;
 		}
-	}
+
+		public static SpawnController Instance
+		{
+			get
+			{
+				instance ??= new SpawnController();
+
+				return instance;
+			}
+		}
 	
-	public Transform Spawn(GameObject anObject, Vector3 aPosition, Quaternion aRotation)
-	{
-		tempGameObject = Instantiate(anObject, aPosition, aRotation);
-		tempTrans = tempGameObject.transform;
-		
-		return tempTrans;
-	}
+		public Transform Spawn(GameObject anObject, Vector3 aPosition, Quaternion aRotation)
+		{
+			return SpawnGameObject(anObject, aPosition, aRotation).transform;
+		}
 	
-	public GameObject SpawnGameObject(GameObject anObject, Vector3 aPosition, Quaternion aRotation)
-	{
-		tempGameObject = Instantiate(anObject, aPosition, aRotation);
-		tempTrans = tempGameObject.transform;
+		public GameObject SpawnGameObject(GameObject anObject, Vector3 aPosition, Quaternion aRotation)
+		{
+			tempGameObject = Object.Instantiate(anObject, aPosition, aRotation);
+			tempTrans = tempGameObject.transform;
 		
-		return tempGameObject;
+			return tempGameObject;
+		}
 	}
 }

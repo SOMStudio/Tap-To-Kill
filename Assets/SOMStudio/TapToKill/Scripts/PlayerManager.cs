@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using SOMStudio.TapToKill.Scripts.Base;
 
 [AddComponentMenu("SOM Studio/Tap-To-Kill/Player Manager")]
 public class PlayerManager : BasePlayerManager

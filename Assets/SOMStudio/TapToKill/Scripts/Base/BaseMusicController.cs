@@ -1,71 +1,74 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class BaseMusicController : MonoBehaviour
+namespace SOMStudio.TapToKill.Scripts.Base
 {
-	[SerializeField] private List<MusicController> musicList;
+	public class BaseMusicController : MonoBehaviour
+	{
+		[SerializeField] private List<MusicController> musicList;
 
-	[System.NonSerialized] public static BaseMusicController Instance;
+		[System.NonSerialized] public static BaseMusicController Instance;
 	
-	private void Awake()
-	{
-		Init();
-	}
-
-	private void Start()
-	{
-		DontDestroyOnLoad(this.gameObject);
-	}
-
-	private void Init()
-	{
-		if (Instance == null)
+		private void Awake()
 		{
-			Instance = this;
+			Init();
 		}
-		else if (Instance != this)
+
+		private void Start()
 		{
-			Destroy(gameObject);
+			DontDestroyOnLoad(this.gameObject);
 		}
-	}
 
-	public void UpdateVolume()
-	{
-		foreach (MusicController item in musicList)
+		private void Init()
 		{
-			item.UpdateVolume();
+			if (Instance == null)
+			{
+				Instance = this;
+			}
+			else if (Instance != this)
+			{
+				Destroy(gameObject);
+			}
 		}
-	}
 
-	public void StopMusic(int num)
-	{
-		MusicController temp = musicList[num];
-
-		if (temp)
+		public void UpdateVolume()
 		{
-			temp.loopMusic = false;
-			temp.FadeOut(15f);
+			foreach (MusicController item in musicList)
+			{
+				item.UpdateVolume();
+			}
 		}
-	}
 
-	public void StopMusicButPlayToEnd(int num)
-	{
-		MusicController temp = musicList[num];
-
-		if (temp)
+		public void StopMusic(int num)
 		{
-			temp.loopMusic = false;
+			MusicController temp = musicList[num];
+
+			if (temp)
+			{
+				temp.loopMusic = false;
+				temp.FadeOut(15f);
+			}
 		}
-	}
 
-	public void PlayMusic(int num)
-	{
-		MusicController temp = musicList[num];
-
-		if (temp)
+		public void StopMusicButPlayToEnd(int num)
 		{
-			temp.loopMusic = true;
-			temp.FadeIn(15f);
+			MusicController temp = musicList[num];
+
+			if (temp)
+			{
+				temp.loopMusic = false;
+			}
+		}
+
+		public void PlayMusic(int num)
+		{
+			MusicController temp = musicList[num];
+
+			if (temp)
+			{
+				temp.loopMusic = true;
+				temp.FadeIn(15f);
+			}
 		}
 	}
 }

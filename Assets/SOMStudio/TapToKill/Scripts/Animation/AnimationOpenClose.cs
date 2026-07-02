@@ -1,83 +1,86 @@
 ﻿using UnityEngine;
 
-[AddComponentMenu("SOM Studio/Tap-To-Kill/Utility/Animation Open Close")]
-public class AnimationOpenClose : MonoBehaviour
+namespace SOMStudio.TapToKill.Scripts.Animation
 {
-	public bool hasHideAnimation;
+	[AddComponentMenu("SOM Studio/Tap-To-Kill/Utility/Animation Open Close")]
+	public class AnimationOpenClose : MonoBehaviour
+	{
+		public bool hasHideAnimation;
 
-	private readonly int openAnim = Animator.StringToHash("open");
-	private readonly int hideAnim = Animator.StringToHash("hide");
+		private readonly int openAnim = Animator.StringToHash("open");
+		private readonly int hideAnim = Animator.StringToHash("hide");
 
-	private Animator animator;
+		private Animator animator;
 	
-	private void Awake()
-	{
-		animator = GetComponent<Animator>();
-
-		if (animator.parameters.Length > 1)
+		private void Awake()
 		{
-			hasHideAnimation = true;
+			animator = GetComponent<Animator>();
+
+			if (animator.parameters.Length > 1)
+			{
+				hasHideAnimation = true;
+			}
 		}
-	}
 	
-	public void Click()
-	{
-		if (IsOpen())
+		public void Click()
 		{
-			Close();
+			if (IsOpen())
+			{
+				Close();
+			}
+			else
+			{
+				Open();
+			}
 		}
-		else
-		{
-			Open();
-		}
-	}
 
-	public void Open()
-	{
-		if (!IsOpen())
+		public void Open()
 		{
-			animator.SetBool(openAnim, true);
+			if (!IsOpen())
+			{
+				animator.SetBool(openAnim, true);
+			}
 		}
-	}
 
-	public void Close()
-	{
-		if (IsOpen())
+		public void Close()
 		{
-			animator.SetBool(openAnim, false);
+			if (IsOpen())
+			{
+				animator.SetBool(openAnim, false);
+			}
 		}
-	}
 
-	public bool IsOpen()
-	{
-		return animator.GetBool(openAnim);
-	}
-
-	public void Hide()
-	{
-		if (hasHideAnimation)
+		public bool IsOpen()
 		{
-			animator.SetBool(hideAnim, true);
+			return animator.GetBool(openAnim);
 		}
-	}
 
-	public void Show()
-	{
-		if (hasHideAnimation)
+		public void Hide()
 		{
-			animator.SetBool(hideAnim, false);
+			if (hasHideAnimation)
+			{
+				animator.SetBool(hideAnim, true);
+			}
 		}
-	}
 
-	public bool IsShow()
-	{
-		if (hasHideAnimation)
+		public void Show()
 		{
-			return animator.GetBool(hideAnim);
+			if (hasHideAnimation)
+			{
+				animator.SetBool(hideAnim, false);
+			}
 		}
-		else
+
+		public bool IsShow()
 		{
-			return true;
+			if (hasHideAnimation)
+			{
+				return animator.GetBool(hideAnim);
+			}
+			else
+			{
+				return true;
+			}
 		}
 	}
 }
