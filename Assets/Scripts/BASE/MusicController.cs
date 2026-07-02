@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
+[AddComponentMenu("SOM Studio/Tap-To-Kill/Music Controller")]
+[RequireComponent(typeof(BaseMenuController))]
 public class MusicController : MonoBehaviour
 {
-
 	public string gamePrefsName = "DefaultGame";
 
 	[Range(0, 1)] public float volume;
@@ -10,12 +11,12 @@ public class MusicController : MonoBehaviour
 	public bool loopMusic;
 
 	private AudioSource source;
-	private GameObject sourceGO;
+	private GameObject sourceGameObject;
 
 	private int fadeState;
 	private int targetFadeState;
 
-	private float volumeON;
+	private float volumeOn;
 	private float targetVolume;
 
 	public float fadeTime = 15f;
@@ -26,20 +27,20 @@ public class MusicController : MonoBehaviour
 		string stKey = $"{gamePrefsName}_MusicVol";
 		if (PlayerPrefs.HasKey(stKey))
 		{
-			volumeON = PlayerPrefs.GetFloat(stKey);
+			volumeOn = PlayerPrefs.GetFloat(stKey);
 		}
 		else
 		{
-			volumeON = 0.2f;
+			volumeOn = 0.2f;
 		}
 
-		sourceGO = new GameObject("Music_AudioSource");
-		source = sourceGO.AddComponent<AudioSource>();
+		sourceGameObject = new GameObject("Music_AudioSource");
+		source = sourceGameObject.AddComponent<AudioSource>();
 		source.name = "MusicAudioSource";
 		source.playOnAwake = true;
 		source.clip = music;
 		source.volume = volume;
-		DontDestroyOnLoad(sourceGO);
+		DontDestroyOnLoad(sourceGameObject);
 
 		if (shouldFadeInAtStart)
 		{
@@ -49,11 +50,11 @@ public class MusicController : MonoBehaviour
 		else
 		{
 			fadeState = 1;
-			volume = volumeON;
+			volume = volumeOn;
 		}
 
 		targetFadeState = 1;
-		targetVolume = volumeON;
+		targetVolume = volumeOn;
 		source.volume = volume;
 	}
 
@@ -66,7 +67,7 @@ public class MusicController : MonoBehaviour
 		{
 			if (targetFadeState == 1)
 			{
-				if (volume == volumeON)
+				if (Mathf.Approximately(volume, volumeOn))
 					fadeState = 1;
 			}
 			else
@@ -87,8 +88,8 @@ public class MusicController : MonoBehaviour
 			volume = source.volume;
 			fadeState = 0;
 			targetFadeState = 1;
-			volumeON = PlayerPrefs.GetFloat($"{gamePrefsName}_MusicVol");
-			targetVolume = volumeON;
+			volumeOn = PlayerPrefs.GetFloat($"{gamePrefsName}_MusicVol");
+			targetVolume = volumeOn;
 			fadeTime = fadeAmount;
 		}
 	}
@@ -98,13 +99,13 @@ public class MusicController : MonoBehaviour
 		volume = 0;
 		fadeState = 0;
 		targetFadeState = 1;
-		targetVolume = volumeON;
+		targetVolume = volumeOn;
 		fadeTime = fadeAmount;
 	}
 
 	public void FadeOut(float fadeAmount)
 	{
-		volume = volumeON;
+		volume = volumeOn;
 		fadeState = 1;
 		targetFadeState = 0;
 		targetVolume = 0;

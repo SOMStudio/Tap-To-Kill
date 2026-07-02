@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+[AddComponentMenu("SOM Studio/Tap-To-Kill/Menu Manager")]
 public class MenuManager_TapToKill : BaseMenuController {
 	[Header("TapToKill_Settings")]
 	public Text connectionText;
@@ -26,7 +27,7 @@ public class MenuManager_TapToKill : BaseMenuController {
 		}
 	}
 
-	void LateUpdate() {
+	private void LateUpdate() {
 		if (gameController) {
 			if (Input.GetKeyDown (KeyCode.Escape)) {
 				gameController.PauseGame ();

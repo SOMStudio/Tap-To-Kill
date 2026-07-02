@@ -8,40 +8,45 @@ using UnityEditor;
 
 public class BaseMenuController : MonoBehaviour
 {
-	public bool didInit = false;
+	public bool didInit;
 
 	[Header("Base Settings")] public string gamePrefsName = "DefaultGame";
 	
-	public Slider audioSFXSlider;
-	[SerializeField] private float audioSFXSliderValue;
+	public Slider audioSfxSlider;
+	[SerializeField] private float audioSfxSliderValue;
+	
 	public Slider audioMusicSlider;
 	[SerializeField] private float audioMusicSliderValue;
 
-	private bool needSaveOptions = false;
+	private bool needSaveOptions;
 
-	[Header("Main window list")] public AnimationOpenClose[] windowAnimations;
+	[Header("Main window list")]
+	public AnimationOpenClose[] windowAnimations;
 
-	[Header("DisActivate window")] public AnimationOpenClose windowDisActivateAnimation;
+	[Header("DisActivate window")]
+	public AnimationOpenClose windowDisActivateAnimation;
 	public AnimationOpenClose consoleWindowDisActivateAnimation;
 
-	[Header("Menu Data")] [SerializeField] protected int windowActive = -1;
+	[Header("Menu Data")]
+	[SerializeField] protected int windowActive = -1;
 	[SerializeField] protected int consoleWindowActive = -1;
 
-	[Header("StartGame window")] [SerializeField]
-	protected bool windowStartActive = false;
-
+	[Header("StartGame window")]
+	[SerializeField] protected bool windowStartActive;
 	public AnimationOpenClose windowStartGameAnimation;
 
-	[Header("Advice window")] public AnimationOpenClose windowAdviceAnimation;
+	[Header("Advice window")] 
+	public AnimationOpenClose windowAdviceAnimation;
 	public Text windowAdviceText;
 
-	[Header("Inform window")] public AnimationOpenClose windowInformAnimation;
+	[Header("Inform window")]
+	public AnimationOpenClose windowInformAnimation;
 	public Text[] windowInformTextList;
 
 	[Header("Console windows")]
 	public Text consoleWInYesNoTextHead;
 
-	private UnityEvent consoleWindowYesNoActionYes = new UnityEvent();
+	private readonly UnityEvent consoleWindowYesNoActionYes = new UnityEvent();
 	
 	protected virtual void Start()
 	{
@@ -56,31 +61,29 @@ public class BaseMenuController : MonoBehaviour
 	#region MainLogic
 	protected virtual void RestoreOptionsPref()
 	{
-		string stKey = "";
-		
-		stKey = $"{gamePrefsName}_SFXVol";
-		if (PlayerPrefs.HasKey(stKey))
+		string stringKey = $"{gamePrefsName}_SFXVol";
+		if (PlayerPrefs.HasKey(stringKey))
 		{
-			audioSFXSliderValue = PlayerPrefs.GetFloat(stKey);
+			audioSfxSliderValue = PlayerPrefs.GetFloat(stringKey);
 		}
 		else
 		{
-			audioSFXSliderValue = 1;
+			audioSfxSliderValue = 1;
 		}
 
-		stKey = $"{gamePrefsName}_MusicVol";
-		if (PlayerPrefs.HasKey(stKey))
+		stringKey = $"{gamePrefsName}_MusicVol";
+		if (PlayerPrefs.HasKey(stringKey))
 		{
-			audioMusicSliderValue = PlayerPrefs.GetFloat(stKey);
+			audioMusicSliderValue = PlayerPrefs.GetFloat(stringKey);
 		}
 		else
 		{
 			audioMusicSliderValue = 1;
 		}
 		
-		if (audioSFXSlider != null)
+		if (audioSfxSlider != null)
 		{
-			audioSFXSlider.value = audioSFXSliderValue;
+			audioSfxSlider.value = audioSfxSliderValue;
 		}
 
 		if (audioMusicSlider != null)
@@ -95,17 +98,15 @@ public class BaseMenuController : MonoBehaviour
 
 	protected virtual void SaveOptionsPrefs()
 	{
-		string stKey = "";
-
-		stKey = $"{gamePrefsName}_SFXVol";
-		PlayerPrefs.SetFloat(stKey, audioSFXSliderValue);
+		string stKey = $"{gamePrefsName}_SFXVol";
+		PlayerPrefs.SetFloat(stKey, audioSfxSliderValue);
 		stKey = $"{gamePrefsName}_MusicVol";
 		PlayerPrefs.SetFloat(stKey, audioMusicSliderValue);
 	}
 
-	public void ChangeSFXVal(float val)
+	public void ChangeSfxVal(float val)
 	{
-		audioSFXSliderValue = val;
+		audioSfxSliderValue = val;
 
 		if (didInit)
 		{

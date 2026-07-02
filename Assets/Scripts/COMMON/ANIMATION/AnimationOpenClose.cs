@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
+[AddComponentMenu("SOM Studio/Tap-To-Kill/Utility/Animation Open Close")]
 public class AnimationOpenClose : MonoBehaviour
 {
-	public bool hasHideAnimation = false;
+	public bool hasHideAnimation;
 
-	static readonly int open_Anim = Animator.StringToHash("open");
-	static readonly int hide_Anim = Animator.StringToHash("hide");
+	private readonly int openAnim = Animator.StringToHash("open");
+	private readonly int hideAnim = Animator.StringToHash("hide");
 
 	private Animator animator;
 	
@@ -35,7 +36,7 @@ public class AnimationOpenClose : MonoBehaviour
 	{
 		if (!IsOpen())
 		{
-			animator.SetBool(open_Anim, true);
+			animator.SetBool(openAnim, true);
 		}
 	}
 
@@ -43,20 +44,20 @@ public class AnimationOpenClose : MonoBehaviour
 	{
 		if (IsOpen())
 		{
-			animator.SetBool(open_Anim, false);
+			animator.SetBool(openAnim, false);
 		}
 	}
 
 	public bool IsOpen()
 	{
-		return animator.GetBool(open_Anim);
+		return animator.GetBool(openAnim);
 	}
 
 	public void Hide()
 	{
 		if (hasHideAnimation)
 		{
-			animator.SetBool(hide_Anim, true);
+			animator.SetBool(hideAnim, true);
 		}
 	}
 
@@ -64,7 +65,7 @@ public class AnimationOpenClose : MonoBehaviour
 	{
 		if (hasHideAnimation)
 		{
-			animator.SetBool(hide_Anim, false);
+			animator.SetBool(hideAnim, false);
 		}
 	}
 
@@ -72,7 +73,7 @@ public class AnimationOpenClose : MonoBehaviour
 	{
 		if (hasHideAnimation)
 		{
-			return animator.GetBool(hide_Anim);
+			return animator.GetBool(hideAnim);
 		}
 		else
 		{

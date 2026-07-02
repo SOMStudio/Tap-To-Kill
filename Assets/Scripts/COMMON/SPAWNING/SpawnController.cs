@@ -1,10 +1,9 @@
 using UnityEngine;
 
-[AddComponentMenu("Utility/Spawn Controller")]
 public class SpawnController : ScriptableObject
 {
 	private Transform tempTrans;
-	private GameObject tempGO;
+	private GameObject tempGameObject;
 
 	private static SpawnController instance;
 	
@@ -25,7 +24,7 @@ public class SpawnController : ScriptableObject
 		{
 			if (instance == null)
 			{
-				ScriptableObject.CreateInstance<SpawnController>();
+				CreateInstance<SpawnController>();
 			}
 			
 			return instance;
@@ -34,17 +33,17 @@ public class SpawnController : ScriptableObject
 	
 	public Transform Spawn(GameObject anObject, Vector3 aPosition, Quaternion aRotation)
 	{
-		tempGO = (GameObject)Instantiate(anObject, aPosition, aRotation);
-		tempTrans = tempGO.transform;
+		tempGameObject = Instantiate(anObject, aPosition, aRotation);
+		tempTrans = tempGameObject.transform;
 		
 		return tempTrans;
 	}
 	
 	public GameObject SpawnGameObject(GameObject anObject, Vector3 aPosition, Quaternion aRotation)
 	{
-		tempGO = (GameObject)Instantiate(anObject, aPosition, aRotation);
-		tempTrans = tempGO.transform;
+		tempGameObject = Instantiate(anObject, aPosition, aRotation);
+		tempTrans = tempGameObject.transform;
 		
-		return tempGO;
+		return tempGameObject;
 	}
 }

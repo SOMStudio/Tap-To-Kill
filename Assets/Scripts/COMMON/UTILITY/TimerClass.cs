@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[AddComponentMenu("Common/Timer class")]
+[AddComponentMenu("SOM Studio/Tap-To-Kill/Utility/Timer class")]
 public class TimerClass : ScriptableObject
 {
 	public bool isTimerRunning;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[AddComponentMenu("SOM Studio/Tap-To-Kill/Game Controller")]
 public class GameController_TapToKill : BaseGameController {
 
 	[Header("Spawn settings")]
@@ -23,9 +24,9 @@ public class GameController_TapToKill : BaseGameController {
 	private bool startGame;
 	
 	private float timePlay;
-	private float betweaneSpawnTime = 2.0f;
+	private float betweenSpawnTime = 2.0f;
 	private float lastSpawnTime;
-	private float lastFrequenceSpawnTime;
+	private float lastFrequencySpawnTime;
 
 	private TimerClass theTimer;
 
@@ -117,8 +118,8 @@ public class GameController_TapToKill : BaseGameController {
 			
 			timePlay = 0.0f;
 			lastSpawnTime = timePlay;
-			betweaneSpawnTime = timeBetweenSpawn;
-			lastFrequenceSpawnTime = theTimer.GetTime ();
+			betweenSpawnTime = timeBetweenSpawn;
+			lastFrequencySpawnTime = theTimer.GetTime ();
 			
 			playerManager.GameStart ();
 			
@@ -162,7 +163,7 @@ public class GameController_TapToKill : BaseGameController {
 	}
 
 	private void SpawnManager(float time) {
-		if (time - lastSpawnTime > betweaneSpawnTime) {
+		if (time - lastSpawnTime > betweenSpawnTime) {
 			GameObject objDrop = GetRandomGameObject ();
 			Vector3 posDrop = GetRandomPossition ();
 			
@@ -174,11 +175,11 @@ public class GameController_TapToKill : BaseGameController {
 	}
 
 	private void SpawnFrequentManager(float time) {
-		if (betweaneSpawnTime > timeLimitBetweenSpawn) {
-			if (time - lastFrequenceSpawnTime > timeFrequencySpawn) {
-				betweaneSpawnTime -= timeDecreaseStep;
+		if (betweenSpawnTime > timeLimitBetweenSpawn) {
+			if (time - lastFrequencySpawnTime > timeFrequencySpawn) {
+				betweenSpawnTime -= timeDecreaseStep;
 
-				lastFrequenceSpawnTime = time;
+				lastFrequencySpawnTime = time;
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Directions;
 
+[AddComponentMenu("SOM Studio/Tap-To-Kill/Utility/Alighn Screen Component")]
 [ExecuteInEditMode]
 public class AlighnScreenComponent : MonoBehaviour
 {
@@ -8,8 +9,7 @@ public class AlighnScreenComponent : MonoBehaviour
 
 	private Camera mainCamera;
 	private Transform myTransform;
-	
-	[ExecuteInEditMode]
+
 	private void Start()
 	{
 		if (!mainCamera)

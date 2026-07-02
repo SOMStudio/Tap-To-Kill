@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[AddComponentMenu("SOM Studio/Tap-To-Kill/Click Manager")]
 public class ClickManager_TapToKill : ExtendedCustomMonoBehaviour2D
 {
 	[SerializeField] private int bonus = 10;
@@ -9,13 +10,13 @@ public class ClickManager_TapToKill : ExtendedCustomMonoBehaviour2D
 	{
 		Init();
 		
-		Destroy(myGO, secondsToDestroy);
+		Destroy(myGameObject, secondsToDestroy);
 	}
 
 	private void OnMouseDown()
 	{
 		GameController_TapToKill.Instance.AddBonus(bonus);
 
-		Destroy(myGO);
+		Destroy(myGameObject);
 	}
 }

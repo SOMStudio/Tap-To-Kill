@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using System.Collections;
 
+[AddComponentMenu("SOM Studio/Tap-To-Kill/Player Manager")]
 public class PlayerManager_TapToKill : BasePlayerManager
 {
 	public string gamePrefsName = "DefaultGame";
@@ -26,7 +27,6 @@ public class PlayerManager_TapToKill : BasePlayerManager
 	}
 
 	#region MainLogic
-
 	protected override void Init()
 	{
 		DontDestroyOnLoad(this.gameObject);
@@ -45,18 +45,18 @@ public class PlayerManager_TapToKill : BasePlayerManager
 
 	private void StartInit()
 	{
-		DataManager.SetName("Player");
+		dataManager.SetName("Player");
 		
-		serverSuccessConnect.AddListener(SaccesConectServet);
-		serverFailConnect.AddListener(FailConectServet);
+		serverSuccessConnect.AddListener(SuccessConnectServet);
+		serverFailConnect.AddListener(FailConnectServet);
 	}
 
 	public override void GameStart()
 	{
 		base.GameStart();
 		
-		DataManager.SetScore(0);
-		DataManager.SetHighScore(RestoreHighScore());
+		dataManager.SetScore(0);
+		dataManager.SetHighScore(RestoreHighScore());
 	}
 
 	public override void GameFinished()
@@ -65,7 +65,7 @@ public class PlayerManager_TapToKill : BasePlayerManager
 		
 		if (needSavePlayerPrefs)
 		{
-			DataManager.SetHighScore(DataManager.GetScore());
+			dataManager.SetHighScore(dataManager.GetScore());
 			
 			SaveHighScore();
 
@@ -75,10 +75,10 @@ public class PlayerManager_TapToKill : BasePlayerManager
 
 	public void AddScore(int val)
 	{
-		DataManager.AddScore(val);
+		dataManager.AddScore(val);
 		
-		int score = DataManager.GetScore();
-		int highScore = DataManager.GetHighScore();
+		int score = dataManager.GetScore();
+		int highScore = dataManager.GetHighScore();
 		
 		if (!needSavePlayerPrefs && score > highScore)
 		{
@@ -90,12 +90,12 @@ public class PlayerManager_TapToKill : BasePlayerManager
 
 	public int GetScore()
 	{
-		return DataManager.GetScore();
+		return dataManager.GetScore();
 	}
 
 	public int GetHighScore()
 	{
-		return DataManager.GetHighScore();
+		return dataManager.GetHighScore();
 	}
 	#endregion
 
@@ -151,12 +151,12 @@ public class PlayerManager_TapToKill : BasePlayerManager
 
 	}
 
-	private void SaccesConectServet()
+	private void SuccessConnectServet()
 	{
 		gameController.SuccessConnectToServer();
 	}
 
-	private void FailConectServet()
+	private void FailConnectServet()
 	{
 		gameController.FailConnectToServer();
 	}

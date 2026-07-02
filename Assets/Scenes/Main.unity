@@ -1465,7 +1465,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 524828899}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: MenuManager_TapToKill, Assembly-CSharp
         m_MethodName: ChangeMusicVal
         m_Mode: 0
         m_Arguments:
@@ -1795,7 +1795,7 @@ Transform:
   m_GameObject: {fileID: 379599277}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.9296875, y: 0, z: 0}
+  m_LocalPosition: {x: -2.8125, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2098,7 +2098,7 @@ Transform:
   m_GameObject: {fileID: 489094570}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.9296875, y: 0, z: 0}
+  m_LocalPosition: {x: 2.8125, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2305,8 +2305,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   didInit: 0
   gamePrefsName: TapToKill
-  audioSFXSlider: {fileID: 766412264}
-  audioSFXSliderValue: 0
+  audioSfxSlider: {fileID: 766412264}
+  audioSfxSliderValue: 0
   audioMusicSlider: {fileID: 258340463}
   audioMusicSliderValue: 0
   windowAnimations:
@@ -3374,8 +3374,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 524828899}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ChangeSFXVal
+        m_TargetAssemblyTypeName: MenuManager_TapToKill, Assembly-CSharp
+        m_MethodName: ChangeSfxVal
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3522,10 +3522,10 @@ MonoBehaviour:
   - {fileID: 445523840}
   - {fileID: 1070640543}
   spawnParent: {fileID: 808101405}
-  timeBetweaneSpawn: 2
-  timeFrequenceSpawn: 10
-  timeDecreaceStep: 0.2
-  timeLimitBetweaneSpawn: 0.5
+  timeBetweenSpawn: 2
+  timeFrequencySpawn: 10
+  timeDecreaseStep: 0.2
+  timeLimitBetweenSpawn: 0.5
   connectionGame: 0
   startGame: 0
   menuManager: {fileID: 524828899}
@@ -4142,7 +4142,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000000059604645, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -3.9999995, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1070911458

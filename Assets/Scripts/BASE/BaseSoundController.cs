@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[AddComponentMenu("SOM Studio/Tap-To-Kill/Sound Controller")]
 public class BaseSoundController : MonoBehaviour
 {
 	public string gamePrefsName = "DefaultGame";
